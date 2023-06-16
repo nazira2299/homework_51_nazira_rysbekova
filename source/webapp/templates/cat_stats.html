@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Information</title>
+</head>
+<body>
+<div class="container block">
+    <div class="block">
+        {% if happiness < 30 %}
+            <img src="{% static 'images/sad.jpg'%}">
+        {% elif  happiness >= 30 and happiness < 60 %}
+            <img src="{% static 'images/neutral.jpg'%}">
+        {% elif happiness >= 60  %}
+            <img src="{% static 'images/happy.jpg'%}">
+        {% endif %}
+    </div>
+    <div class="block">
+        <p>Кот - {{ name }}</p>
+        <p>Возраст - {{ age }} год</p>
+        <p>Уровень счастья - {{ happiness }}</p>
+        <p>Уровень сытости - {{ satiety }}</p>
+    </div>
+    <form action="/cat_stats" method="post">
+        {% csrf_token %}
+        <select name="action" >
+            <option value="" disabled selected>Выберите действие</option>
+            <option value="play">поиграть с котом</option>
+            {% if sleep == False %}
+                <option value="feed">покормить кота</option>
+                <option value="sleep">уложить спать кота</option>
+            {% endif %}
+        </select>
+        <br>
+            <input  class="button_2" type="submit" value="подтвердить">
+    </form>
+</div>
+</body>
+</html>
